@@ -19,3 +19,4 @@ Change the directory to /proto
 - run `main.py`
 - output will be generated in the songs folder
 - import the song in Propresenter 7 library
+- test
