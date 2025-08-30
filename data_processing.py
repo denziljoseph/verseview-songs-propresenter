@@ -8,8 +8,16 @@ def load_data():
     conn.close()
     return df
 
-def filter_data(df, categories, songs):
-    return df[(df['cat'].isin(categories)) & (df['name'].isin(songs))]
+def filter_categories(df, categories):
+    if categories:
+        return df[(df['cat'].isin(categories))]
+    return df
+
+def filter_songs(df, songs):
+    if songs:
+        return df[(df['name'].isin(songs))]
+    return df
+
 
 def process_lyrics(lyrics):
     return list(filter(lambda x: x != "", lyrics.split('<slide>')))
