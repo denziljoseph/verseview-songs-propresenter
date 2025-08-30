@@ -2,7 +2,7 @@ from pathlib import Path
 import pandas as pd
 
 from data_processing import (
-    load_data, filter_data, process_lyrics,
+    load_data, filter_categories, filter_songs, process_lyrics,
     count_verses, count_lines
 )
 from template_generator import generate_template
@@ -11,10 +11,12 @@ from pro_encoder import encode_to_pro
 
 def main():
     categories = ['VV Malayalam 2021']
-    songs = ['Unarvin varam labhippaan']
+    songs = None
 
     df = load_data()
-    df = filter_data(df, categories, songs)
+    df = filter_categories(df, categories)
+    df = filter_songs(df, songs)
+
 
     # Process original lyrics
     df.loc[:, 'list_lyrics'] = df['lyrics'].apply(process_lyrics)
@@ -40,7 +42,11 @@ def main():
     df = df[output_columns]
 
     for song_data in generate_template(df):
-        file_path = save_file(song_data["rendered_template"], f"{song_data['song_name']}.txt")
+        file_name = f"{song_data['song_name']}.txt"
+        song_content = song_data["rendered_template"]
+        
+        file_path = save_file(song_content, file_name)
+
         encode_to_pro(file_path)
 
 if __name__ == '__main__':

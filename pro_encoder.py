@@ -3,7 +3,8 @@ import os
 from config import PROTOC_PATH, PROTO_DIR, PROTO_FILE
 
 def encode_to_pro(input_file):
-    output_file = f"{input_file}.pro"
+    name, _ = os.path.splitext(input_file)
+    output_file = f"{name}.pro"
     command = f'{PROTOC_PATH} --encode="rv.data.Presentation" {PROTO_FILE} < "{input_file}"'
     
     os.chdir(PROTO_DIR)
